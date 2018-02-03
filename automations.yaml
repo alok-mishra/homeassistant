@@ -1,1 +1,96 @@
-[]
+- action:
+  - service: light.turn_on
+  alias: Door to Garage > Light
+  initial_state: false
+  condition: []
+  id: '1509497046364'
+  trigger:
+  - entity_id: sensor.door_to_garage_access_control
+    from: '23'
+    platform: state
+    to: '22'
+- action:
+  - data:
+      entity_id: switch.driveway_lights_switch
+    service: switch.turn_on
+  alias: 'driveway: dusk - on'
+  initial_state: true
+  condition: []
+  id: '1509773067165'
+  trigger:
+  - event: sunset
+    platform: sun
+- action:
+  - service: light.turn_off
+  alias: Door Light Off
+  initial_state: false
+  condition: []
+  id: '1509925845848'
+  trigger:
+  - entity_id: sensor.door_to_garage_access_control
+    from: '22'
+    platform: state
+    to: '23'
+- action:
+  - data:
+      entity_id: switch.driveway_lights_switch
+    service: switch.turn_off
+  alias: 'driveway: dawn - off'
+  initial_state: true
+  condition: []
+  id: '1512625505053'
+  trigger:
+  - event: sunrise
+    platform: sun
+- action:
+  - data:
+      entity_id: switch.stairs_light_switch
+    service: switch.turn_on
+  - data:
+      entity_id: switch.kitchen_light_switch
+    service: switch.turn_on
+  alias: Stairs Light On @ 6:30pm
+  initial_state: false
+  condition: []
+  id: '1514178318541'
+  trigger:
+  - at: '18:30:00'
+    platform: time
+- action:
+  - data:
+      entity_id: switch.stairs_light_switch
+    service: switch.turn_off
+  alias: Stairs Light off @ 8:30pm
+  initial_state: false
+  condition: []
+  id: '1514178449121'
+  trigger:
+  - at: '20:30:00'
+    platform: time
+- action:
+  - data:
+      brightness_pct: 50
+      entity_id: light.ge_14294_inwall_smart_dimmer_level
+    service: light.turn_on
+  - data:
+      entity_id: switch.kitchen_light_switch
+    service: switch.turn_off
+  alias: Family Lights on @ 8pm
+  initial_state: false
+  condition: []
+  id: '1514249616754'
+  trigger:
+  - at: '20:00:00'
+    platform: time
+- action:
+  - alias: ''
+    data:
+      entity_id: light.ge_14294_inwall_smart_dimmer_level
+    service: light.turn_off
+  alias: Family Lights off @ 11:30pm
+  initial_state: false
+  condition: []
+  id: '1514249887284'
+  trigger:
+  - at: '23:30:00'
+    platform: time

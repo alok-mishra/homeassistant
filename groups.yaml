@@ -1,0 +1,24 @@
+  default_view:
+    view: no
+    icon: mdi:home-assistant
+  main:
+    view: yes
+    name: Main
+    entities:
+      - group.family
+  family:
+    name: Family
+    entities:
+      - light.ge_14294_inwall_smart_dimmer_level
+  beds:
+    icon: mdi:hotel
+    name: Bedrooms
+    entities:
+      - group.main
+      - group.beds
+  tracker:
+    view: yes
+    icon: mdi:compass-outline
+    name: Presence
+    entities:
+      - group.all_devices
