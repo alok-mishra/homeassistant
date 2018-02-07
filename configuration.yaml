@@ -82,6 +82,11 @@ cloud:
     filter:
       include_entities:
         - switch.kitchen_light_switch
+        - switch.stairs_light_switch
+        - switch.circle_plug_switch
+        - switch.driveway_lights_switch
+        - switch.orange_lamp
+        - light.family_lights_level
 
 group: !include groups.yaml
 automation: !include automations.yaml

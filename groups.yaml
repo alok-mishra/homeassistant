@@ -9,7 +9,7 @@
   family:
     name: Family
     entities:
-      - light.ge_14294_inwall_smart_dimmer_level
+      - light.family_lights_level
   beds:
     icon: mdi:hotel
     name: Bedrooms

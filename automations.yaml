@@ -1,15 +1,4 @@
 - action:
-  - service: light.turn_on
-  alias: Door to Garage > Light
-  initial_state: false
-  condition: []
-  id: '1509497046364'
-  trigger:
-  - entity_id: sensor.door_to_garage_access_control
-    from: '23'
-    platform: state
-    to: '22'
-- action:
   - data:
       entity_id: switch.driveway_lights_switch
     service: switch.turn_on
@@ -20,17 +9,6 @@
   trigger:
   - event: sunset
     platform: sun
-- action:
-  - service: light.turn_off
-  alias: Door Light Off
-  initial_state: false
-  condition: []
-  id: '1509925845848'
-  trigger:
-  - entity_id: sensor.door_to_garage_access_control
-    from: '22'
-    platform: state
-    to: '23'
 - action:
   - data:
       entity_id: switch.driveway_lights_switch
@@ -69,28 +47,29 @@
     platform: time
 - action:
   - data:
-      brightness_pct: 50
-      entity_id: light.ge_14294_inwall_smart_dimmer_level
+      brightness: 100
+      entity_id: light.rainbow
+      rgb_color:
+      - 255
+      - 100
+      - 200
     service: light.turn_on
-  - data:
-      entity_id: switch.kitchen_light_switch
-    service: switch.turn_off
-  alias: Family Lights on @ 8pm
-  initial_state: false
+  alias: Pink Door
+  initial_state: true
   condition: []
-  id: '1514249616754'
+  id: '1517750201173'
   trigger:
-  - at: '20:00:00'
-    platform: time
+  - entity_id: binary_sensor.bedroom_door_sensor
+    from: 'off'
+    platform: state
+    to: 'on'
 - action:
-  - alias: ''
-    data:
-      entity_id: light.ge_14294_inwall_smart_dimmer_level
-    service: light.turn_off
-  alias: Family Lights off @ 11:30pm
-  initial_state: false
+  - service: script.door_flash
+  alias: Bedroom Door Flash
   condition: []
-  id: '1514249887284'
+  id: '1517981772506'
   trigger:
-  - at: '23:30:00'
-    platform: time
+  - entity_id: binary_sensor.bedroom_door_sensor
+    from: 'off'
+    platform: state
+    to: 'on'
