@@ -22,7 +22,7 @@ introduction: # Show links to resources in log and frontend
 frontend:     # Enables the frontend
 updater:      # Checks for available updates
 config:       # Enables configuration UI
-discovery:    # Discover some devices automatically
+# discovery:    # Discover some devices automatically
 conversation: # Allows you to issue voice commands from the frontend in enabled browsers
 history:      # Enables support for tracking state changes over time
 logbook:      # View all events in a logbook
@@ -62,7 +62,7 @@ wemo:
 
 media_player:
   - platform: roku
-    interval_seconds: 60
+    timeout: 20
 
 device_tracker:
   - platform: asuswrt
@@ -81,12 +81,30 @@ cloud:
   alexa:
     filter:
       include_entities:
-        - switch.kitchen_light_switch
-        - switch.stairs_light_switch
+        - light.family_lights_level
         - switch.circle_plug_switch
         - switch.driveway_lights_switch
+        - switch.fan_switch
+        - switch.kitchen_light_switch
+        - switch.stairs_light_switch
         - switch.orange_lamp
+      include_domains:
+        - light
+        - switch
+
+  google_actions:
+    filter:
+      include_entities:
         - light.family_lights_level
+        - switch.circle_plug_switch
+        - switch.driveway_lights_switch
+        - switch.fan_switch
+        - switch.kitchen_light_switch
+        - switch.stairs_light_switch
+        - switch.orange_lamp
+      include_domains:
+        - light
+        - switch
 
 group: !include groups.yaml
 automation: !include automations.yaml

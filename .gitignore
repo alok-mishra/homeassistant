@@ -4,5 +4,6 @@
 
 !*.yaml
 
-known_devices.yaml
 secrets.yaml
+known_devices.yaml
+entity_registry.yaml

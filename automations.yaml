@@ -20,31 +20,35 @@
   trigger:
   - event: sunrise
     platform: sun
-- action:
+- id: '1514178318541'
+  alias: Vacation Lights On @ Sunset
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
   - data:
       entity_id: switch.stairs_light_switch
     service: switch.turn_on
   - data:
       entity_id: switch.kitchen_light_switch
     service: switch.turn_on
-  alias: Stairs Light On @ 6:30pm
   initial_state: false
-  condition: []
-  id: '1514178318541'
+- id: '1514178449121'
+  alias: Vacation Lights Off @ Sunset + 2h
   trigger:
-  - at: '18:30:00'
-    platform: time
-- action:
+  - event: sunset
+    offset: 02:00:00
+    platform: sun
+  condition: []
+  action:
   - data:
       entity_id: switch.stairs_light_switch
     service: switch.turn_off
-  alias: Stairs Light off @ 8:30pm
+  - data:
+      entity_id: switch.kitchen_light_switch
+    service: switch.turn_off
   initial_state: false
-  condition: []
-  id: '1514178449121'
-  trigger:
-  - at: '20:30:00'
-    platform: time
 - action:
   - data:
       brightness: 100
@@ -55,7 +59,7 @@
       - 200
     service: light.turn_on
   alias: Pink Door
-  initial_state: true
+  initial_state: false
   condition: []
   id: '1517750201173'
   trigger:
@@ -66,10 +70,48 @@
 - action:
   - service: script.door_flash
   alias: Bedroom Door Flash
-  condition: []
+  initial_state: false
+  condition:
+  - after: '19:00:00'
+    before: 01:00:00
+    condition: time
   id: '1517981772506'
   trigger:
   - entity_id: binary_sensor.bedroom_door_sensor
     from: 'off'
     platform: state
     to: 'on'
+- alias: Stairs Motion On
+  id: stairs_motion_on
+  trigger:
+  - entity_id: binary_sensor.motion_sensor
+    platform: state
+    from: 'off'
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: switch.stairs_light_switch
+    state: 'off'
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - data:
+      entity_id: switch.stairs_light_switch
+    service: switch.turn_on
+- alias: Stairs Motion Off
+  id: stairs_motion_off
+  trigger:
+  - entity_id: binary_sensor.motion_sensor
+    platform: state
+    to: 'off'
+    for:
+      minutes: 1
+  condition:
+  - condition: state
+    entity_id: switch.stairs_light_switch
+    state: 'on'
+  action:
+  - data:
+      entity_id: switch.stairs_light_switch
+    service: switch.turn_off
