@@ -14,11 +14,11 @@ homeassistant:
   customize: !include customize.yaml
 
 http:
-  api_password: !secret http_password
+  # api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
 
-introduction: # Show links to resources in log and frontend
+# introduction: # Show links to resources in log and frontend
 frontend:     # Enables the frontend
 updater:      # Checks for available updates
 config:       # Enables configuration UI
@@ -63,6 +63,10 @@ wemo:
 media_player:
   - platform: roku
     timeout: 20
+  - platform: kodi
+    name: Kodi
+    host: 192.168.1.64
+    enable_websocket: false
 
 device_tracker:
   - platform: asuswrt

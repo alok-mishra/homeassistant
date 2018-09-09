@@ -10,3 +10,12 @@ door_flash:
       data:
         entity_id: light.family_lights_level
         brightness: 20
+
+update_kodi:
+  alias: Update Kodi Library
+  sequence:
+    - alias: Kodi Library Update
+      service: media_player.kodi_call_method
+      data:
+        entity_id: media_player.kodi
+        method: VideoLibrary.Scan
