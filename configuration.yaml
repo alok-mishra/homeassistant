@@ -14,7 +14,7 @@ homeassistant:
   customize: !include customize.yaml
 
 http:
-  # api_password: !secret http_password
+  api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
 
@@ -44,8 +44,9 @@ tts:
 # Z-Wave and Zigbee via HUSBZB-1
 zwave:
  usb_path: /dev/ttyUSB0
+ network_key: !secret zwave_network_key
  debug: false
- 
+
 zha:
  usb_path: /dev/ttyUSB1
  database_path: /home/homeassistant/.homeassistant/zigbee.db
@@ -109,6 +110,7 @@ cloud:
       include_domains:
         - light
         - switch
+        - script
 
 group: !include groups.yaml
 automation: !include automations.yaml
